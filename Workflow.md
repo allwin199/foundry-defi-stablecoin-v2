@@ -14,7 +14,7 @@ We will use chainlink pricefeed to get the dollar equivalent value of wETH & wBT
 
 To calculate the health factor
 
-```
+```sol
     uint256 private constant LIQUIDATION_THRESHOLD = 50; //user should be 200% overcollateralized
     uint256 private constant LIQUIDATION_PRECISION = 100;
 
@@ -27,24 +27,23 @@ To calculate the health factor
 
     // since we are multiplying with liquidation threshold, we have to divide by 100
 
-    // HealthFactor > 1
-    // collateralValueInUsd = $2000 of ETH
+    // collateralValueInUsd = $2000 => 2000e18
     // totalDSCMinted = 100 DSC // value in wei => 100e18
-    // collateralValueInUsd * LIQUIDATION_THRESHOLD = $2000 * 50 = $100000
-    // ((collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION) = 100000 / 100 = 1000
-    // collateralAdjustedForThreshold = 1000
-    // collateralAdjustedForThreshold * PRECISION = 1000 * 1e18 = 1000e18
-    // ((collateralAdjustedForThreshold * PRECISION) / totalDSCMinted) = 1000e18 / 100e18 = 10
+    // collateralValueInUsd * LIQUIDATION_THRESHOLD = 2000e18 * 50 = $100000e18
+    // ((collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION) = 100000e18 / 100 = 1000e18
+    // collateralAdjustedForThreshold = 1000e18
+    // collateralAdjustedForThreshold * PRECISION = 1000e18 * 1e18 = 1000e36
+    // ((collateralAdjustedForThreshold * PRECISION) / totalDSCMinted) = 1000e36 / 100e18 = 10e18
     // healthfactor > 1
 
     // HealthFactor < 1
-    // collateralValueInUsd = $150 of ETH
+    // collateralValueInUsd = $150 => 150e18
     // totalDSCMinted = 100 DSC // value in wei => 100e18
-    // collateralValueInUsd * LIQUIDATION_THRESHOLD = 150 * 50 = 7500
-    // ((collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION) = 7500 / 100 = 75
-    // collateralAdjustedForThreshold = 75
-    // collateralAdjustedForThreshold * PRECISION = 75 * 1e18 = 75e18
-    // ((collateralAdjustedForThreshold * PRECISION) / totalDSCMinted) = 75e18 / 100e18 = 0.75
+    // collateralValueInUsd * LIQUIDATION_THRESHOLD = 150 * 50 = 7500e18
+    // ((collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION) = 7500e18 / 100 = 75e18
+    // collateralAdjustedForThreshold = 75e18
+    // collateralAdjustedForThreshold * PRECISION = 75e18 * 1e18 = 75e36
+    // ((collateralAdjustedForThreshold * PRECISION) / totalDSCMinted) = 75e36 / 100e18 = 0.75e18
     // healthfactor < 1
 ```
 
